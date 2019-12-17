@@ -1,0 +1,19 @@
+<li
+  [routerLink]="[routerLinkUrl]"
+  routerLinkActive="url-active"
+>
+  <div class="icon">
+    <app-graph
+      [graphTheme]="graphTheme"
+      [borderWidth]="2"
+      [valuesConnectorLineWidth]="1"
+    ></app-graph>
+  </div>
+  <div class="info-window">
+    <span class="heading">{{ heading }}</span>
+    <br>
+    <div class="data">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</li>

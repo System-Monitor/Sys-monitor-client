@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+  list-style: none;
+}
+
+nav {
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+
+    $buttonBackgroundColor: #dcdcdc;
+    $buttonColor: #111111;
+    $buttonHeight: 40px;
+
+    li {
+      button {
+        height: $buttonHeight;
+        padding-left: 7px;
+        padding-right: 7px;
+
+        border: 1px solid #757575;
+        background-color: $buttonBackgroundColor;
+        color: $buttonColor;
+        cursor: pointer;
+        outline: none;
+      }
+
+      button:hover {
+        background-color: darken($buttonBackgroundColor, 10%);
+      }
+
+      button:active,
+      button.button-active {
+        height: $buttonHeight + 2;
+        background-color: white;
+
+        border-bottom: none;
+      }
+    }
+  }
+}

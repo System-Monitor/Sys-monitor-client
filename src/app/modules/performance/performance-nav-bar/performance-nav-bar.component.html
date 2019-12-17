@@ -1,0 +1,29 @@
+<ul>
+  <app-performance-nav-bar-item
+    heading="CPU"
+    [graphTheme]="graphThemes.cpu"
+    routerLinkUrl="/performance/cpu"
+  >
+    100%  3.19 GHz
+  </app-performance-nav-bar-item>
+
+  <app-performance-nav-bar-item
+    heading="Memory"
+    [graphTheme]="graphThemes.memory"
+    routerLinkUrl="/performance/memory"
+  >
+    8.8/15.8 GB (56%)
+  </app-performance-nav-bar-item>
+
+  <app-performance-nav-bar-item
+    heading="Wi-Fi"
+    [graphTheme]="graphThemes.wifi"
+    routerLinkUrl="/performance/wifi"
+  >
+    <span class="less-emphasis">S:</span>
+    10 &nbsp;
+    <span class="less-emphasis">R:</span>
+    500.4 Kbps
+  </app-performance-nav-bar-item>
+
+</ul>
