@@ -125,7 +125,5 @@ export class GraphComponent implements OnInit, AfterViewInit {
         { x: x1, y: this.graphHeight }
       ], this.graphTheme.areaColor);
     }
-
   }
-
 }

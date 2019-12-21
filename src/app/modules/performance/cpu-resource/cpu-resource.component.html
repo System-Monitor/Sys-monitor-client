@@ -4,7 +4,7 @@
 
     <div class="heading">
       <h2>CPU</h2>
-      <p>Intel(R) Core(TM) i7-6600U CPU @ 2.60GHz</p>
+      <p>{{ cpu.Name }}</p>
     </div>
 
     <div class="graph">
@@ -20,7 +20,7 @@
             Utilization
           </div>
           <div class="data-value">
-            20%
+            {{ cpu.Utilization }}%
           </div>
         </div>
 
@@ -29,7 +29,7 @@
             Speed
           </div>
           <div class="data-value">
-            3.18 GHz
+            {{ cpu.SpeedInGHz.toString().substr(0, 3) }} GHz
           </div>
         </div>
 
@@ -38,7 +38,7 @@
             Processes
           </div>
           <div class="data-value">
-            324
+            {{ cpu.NumberOfProcesses }}
           </div>
         </div>
 
@@ -50,27 +50,27 @@
           <tbody>
             <tr>
               <td class="less-emphasis info-table-key">Base speed:</td>
-              <td class="info-value">2.80 GHz</td>
+              <td class="info-value">{{ cpu.BaseSpeedInGHz.toString().substr(0, 3) }} GHz</td>
             </tr>
             <tr>
               <td class="less-emphasis info-table-key">Cores:</td>
-              <td class="info-value">2</td>
+              <td class="info-value">{{ cpu.NumberOfCores }}</td>
             </tr>
             <tr>
               <td class="less-emphasis info-table-key">Logical processors:</td>
-              <td class="info-value">4</td>
+              <td class="info-value">{{ cpu.NumberOfLogicalProcessors }}</td>
             </tr>
             <tr>
               <td class="less-emphasis info-table-key">L1 cache:</td>
-              <td class="info-value">128 KB</td>
+              <td class="info-value">{{ cpu.L1CacheInKB }} KB</td>
             </tr>
             <tr>
               <td class="less-emphasis info-table-key">L2 cache:</td>
-              <td class="info-value">512 KB</td>
+              <td class="info-value">{{ cpu.L2CacheInKB }} KB</td>
             </tr>
             <tr>
               <td class="less-emphasis info-table-key">L3 cache:</td>
-              <td class="info-value">4096 KB</td>
+              <td class="info-value">{{ cpu.L3CacheInKB }} KB</td>
             </tr>
           </tbody>
         </table>

@@ -4,7 +4,9 @@
 
     <div class="heading">
       <h2>Memory</h2>
-      <p>16.0 GB</p>
+      <p>
+        {{ (memory.TotalInBytes / (1024 * 1024 * 1024)).toString().substr(0, 4) }}
+        GB</p>
     </div>
 
     <div class="graph">
@@ -20,7 +22,8 @@
             In use
           </div>
           <div class="data-value">
-            7.9 GB
+            {{ (memory.InUseInBytes / (1024 * 1024 * 1024)).toString().substr(0, 3) }}
+            GB
           </div>
         </div>
 
@@ -29,7 +32,8 @@
             Available
           </div>
           <div class="data-value">
-            8.0 GB
+            {{ (memory.AvailableInBytes / (1024 * 1024 * 1024)).toString().substr(0, 3) }}
+            GB
           </div>
         </div>
 

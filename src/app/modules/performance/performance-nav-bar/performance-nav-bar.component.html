@@ -4,7 +4,7 @@
     [graphTheme]="graphThemes.cpu"
     routerLinkUrl="/performance/cpu"
   >
-    100%  3.19 GHz
+    {{ cpu.Utilization }}%  {{ cpu.SpeedInGHz.toString().substr(0, 4) }} GHz
   </app-performance-nav-bar-item>
 
   <app-performance-nav-bar-item
@@ -12,7 +12,12 @@
     [graphTheme]="graphThemes.memory"
     routerLinkUrl="/performance/memory"
   >
-    8.8/15.8 GB (56%)
+    {{ (memory.InUseInBytes / (1024 * 1024 * 1024)).toString().substr(0, 4) }}
+    /
+    {{ (memory.TotalInBytes / (1024 * 1024 * 1024)).toString().substr(0, 4) }}
+    GB (
+    {{ (memory.InUseInBytes * 100 / memory.TotalInBytes).toString().split('.')[0] }}
+    %)
   </app-performance-nav-bar-item>
 
   <app-performance-nav-bar-item
@@ -21,9 +26,9 @@
     routerLinkUrl="/performance/wifi"
   >
     <span class="less-emphasis">S:</span>
-    10 &nbsp;
+    {{ wifi.SendSpeedInKBPS }} &nbsp;
     <span class="less-emphasis">R:</span>
-    500.4 Kbps
+    {{ wifi.ReceiveSpeedInKBPS }} Kbps
   </app-performance-nav-bar-item>
 
 </ul>

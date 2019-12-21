@@ -20,6 +20,13 @@ export const environment = {
       gridColor: 'rgba(143,42,0,0.27)',
       areaColor: 'rgba(134,32,0,0.29)'
     }
+  },
+  syncInfo: {
+    FirebaseProjectId: '',
+    BaseUrl: 'https://system-stats<FIREBASE_PROJECT_ID>.firebaseio.com/',
+    CpuRoute: 'cpu_info.json',
+    MemoryRoute: 'memory_info.json',
+    WifiRoute: 'wifi_info.json'
   }
 };
 

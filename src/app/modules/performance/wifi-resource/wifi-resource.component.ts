@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+
 import {environment} from '@environments/environment';
+
+import {Wifi} from '@models/Wifi';
+import {PerformanceWifiService} from '@services/performance-wifi.service';
 
 @Component({
   selector: 'app-wifi-resource',
@@ -9,12 +14,23 @@ import {environment} from '@environments/environment';
     './wifi-resource.component.scss'
   ]
 })
-export class WifiResourceComponent implements OnInit {
+export class WifiResourceComponent implements OnInit, OnDestroy {
   graphTheme = environment.graphThemes.wifi;
 
-  constructor() { }
+  wifi: Wifi;
+  wifiSubscription: Subscription;
+
+  constructor(private performanceWifiService: PerformanceWifiService) { }
 
   ngOnInit() {
+    this.wifiSubscription = this.performanceWifiService.wifiSubject
+      .subscribe((wifi: Wifi) => {
+        this.wifi = wifi;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.wifiSubscription.unsubscribe();
   }
 
 }
