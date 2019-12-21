@@ -20,6 +20,9 @@ export class WifiResourceComponent implements OnInit, OnDestroy {
   wifi: Wifi;
   wifiSubscription: Subscription;
 
+  receiveSpeedValues: number[];
+  receiveSpeedValuesSubscription: Subscription;
+
   constructor(private performanceWifiService: PerformanceWifiService) { }
 
   ngOnInit() {
@@ -27,10 +30,15 @@ export class WifiResourceComponent implements OnInit, OnDestroy {
       .subscribe((wifi: Wifi) => {
         this.wifi = wifi;
       });
+    this.receiveSpeedValuesSubscription =
+      this.performanceWifiService.wifiReceiveSpeedValuesSubject
+        .subscribe((receiveSpeedValues: number[]) => {
+          this.receiveSpeedValues = [ ...receiveSpeedValues ];
+        });
   }
 
   ngOnDestroy(): void {
     this.wifiSubscription.unsubscribe();
+    this.receiveSpeedValuesSubscription.unsubscribe();
   }
-
 }

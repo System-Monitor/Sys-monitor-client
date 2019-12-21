@@ -11,6 +11,8 @@ export class PerformanceNavBarItemComponent implements OnInit {
   @Input() routerLinkUrl = '#';
 
   @Input() graphTheme = environment.graphThemes.cpu;
+  @Input() graphValues: number[] = [];
+  @Input() maxGraphValue = 100;
 
   constructor() { }
 

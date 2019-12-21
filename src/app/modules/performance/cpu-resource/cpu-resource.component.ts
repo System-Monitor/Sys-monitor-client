@@ -19,16 +19,23 @@ export class CpuResourceComponent implements OnInit, OnDestroy {
   cpu: Cpu;
   cpuSubscription: Subscription;
 
+  utilizationValues: number[];
+  utilizationValuesSubscription: Subscription;
+
   constructor(private performanceCpuService: PerformanceCpuService) { }
 
   ngOnInit() {
     this.cpuSubscription = this.performanceCpuService.cpuSubject.subscribe((cpu: Cpu) => {
       this.cpu = cpu;
     });
+    this.utilizationValuesSubscription = this.performanceCpuService.utilizationSubject
+      .subscribe((utilizationValues: number[]) => {
+        this.utilizationValues = [ ...utilizationValues ];
+      });
   }
 
   ngOnDestroy(): void {
     this.cpuSubscription.unsubscribe();
+    this.utilizationValuesSubscription.unsubscribe();
   }
-
 }

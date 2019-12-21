@@ -20,13 +20,19 @@ export class PerformanceNavBarComponent implements OnInit, OnDestroy {
   graphThemes = environment.graphThemes;
 
   cpu: Cpu;
+  cpuUtilizationValues: number[];
   cpuSubscription: Subscription;
+  cpuUtilizationValuesSubscription: Subscription;
 
   wifi: Wifi;
+  wifiReceiveSpeedValues: number[];
   wifiSubscription: Subscription;
+  wifiReceiveSpeedValuesSubscription: Subscription;
 
   memory: Memory;
+  memoryUsageValues: number[];
   memorySubscription: Subscription;
+  memoryUsageValuesSubscription: Subscription;
 
   constructor(private performanceCpuService: PerformanceCpuService,
               private performanceWifiService: PerformanceWifiService,
@@ -37,20 +43,39 @@ export class PerformanceNavBarComponent implements OnInit, OnDestroy {
       .subscribe((cpu: Cpu) => {
         this.cpu = cpu;
       });
+    this.cpuUtilizationValuesSubscription = this.performanceCpuService.utilizationSubject
+      .subscribe((utilizationValues: number[]) => {
+        this.cpuUtilizationValues = [ ...utilizationValues ];
+      });
+
     this.wifiSubscription = this.performanceWifiService.wifiSubject
       .subscribe((wifi: Wifi) => {
         this.wifi = wifi;
       });
+    this.wifiReceiveSpeedValuesSubscription = this.performanceWifiService.wifiReceiveSpeedValuesSubject
+      .subscribe((receiveSpeedValues: number[]) => {
+        this.wifiReceiveSpeedValues = [ ...receiveSpeedValues ];
+      });
+
     this.memorySubscription = this.performanceMemoryService.memorySubject
       .subscribe((memory: Memory) => {
         this.memory = memory;
+      });
+    this.memoryUsageValuesSubscription = this.performanceMemoryService.memoryUsageSubject
+      .subscribe((memoryUsageValues: number[]) => {
+        this.memoryUsageValues = [ ...memoryUsageValues ];
       });
   }
 
   ngOnDestroy(): void {
     this.cpuSubscription.unsubscribe();
+    this.cpuUtilizationValuesSubscription.unsubscribe();
+
     this.wifiSubscription.unsubscribe();
+    this.wifiReceiveSpeedValuesSubscription.unsubscribe();
+
     this.memorySubscription.unsubscribe();
+    this.memoryUsageValuesSubscription.unsubscribe();
   }
 
 }

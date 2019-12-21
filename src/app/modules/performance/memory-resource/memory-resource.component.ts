@@ -20,17 +20,26 @@ export class MemoryResourceComponent implements OnInit, OnDestroy {
   memory: Memory;
   memorySubscription: Subscription;
 
+  memoryUsageValues: number[];
+  memoryUsageValuesSubscription: Subscription;
+
   constructor(private performanceMemoryService: PerformanceMemoryService) { }
 
   ngOnInit() {
-    this.memorySubscription = this.performanceMemoryService.memorySubject
-      .subscribe((memory: Memory) => {
-        this.memory = memory;
-      });
+    this.memorySubscription =
+      this.performanceMemoryService.memorySubject
+        .subscribe((memory: Memory) => {
+          this.memory = memory;
+        });
+    this.memoryUsageValuesSubscription =
+      this.performanceMemoryService.memoryUsageSubject
+        .subscribe((memoryUsageValues: number[]) => {
+          this.memoryUsageValues = [ ...memoryUsageValues ];
+        });
   }
 
   ngOnDestroy(): void {
     this.memorySubscription.unsubscribe();
+    this.memoryUsageValuesSubscription.unsubscribe();
   }
-
 }

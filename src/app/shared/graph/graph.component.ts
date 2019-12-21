@@ -3,8 +3,9 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Input,
+  Input, OnChanges,
   OnInit,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import {CanvasManager} from '@shared/graph/canvas.manager';
@@ -15,15 +16,19 @@ import {environment} from '@environments/environment';
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss']
 })
-export class GraphComponent implements OnInit, AfterViewInit {
+export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('canvas', { static: false }) canvasElementRef: ElementRef<HTMLCanvasElement>;
   @ViewChild('parent', { static: false }) parentElementRef: ElementRef<HTMLDivElement>;
+
+  @Input() title = 'Title of the graph';
+
+  @Input() maxValue = 100;
 
   @Input() graphTheme = environment.graphThemes.cpu;
   @Input() borderWidth = 3;
   @Input() valuesConnectorLineWidth = 2;
 
-  @Input() values: number[] = [26, 15, 20, 45, 50, 90];
+  @Input() values: number[] = [26, 15, 20, 45, 50, 40];
 
   canvas: HTMLCanvasElement;
   canvasManager: CanvasManager;
@@ -40,6 +45,12 @@ export class GraphComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.canvasManager) {
+      this.render();
+    }
   }
 
   ngAfterViewInit() {
@@ -59,10 +70,17 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   render() {
+    this.clearBackground();
     this.renderOutline();
     this.renderGrid();
     this.renderValuesLine();
     this.colorValuesArea();
+  }
+
+  clearBackground() {
+    this.canvasManager.drawFilledRect(
+      0, 0, this.canvas.width, this.canvas.height, 'white'
+    );
   }
 
   renderOutline() {
@@ -92,11 +110,11 @@ export class GraphComponent implements OnInit, AfterViewInit {
     const verticalLineDistance = this.graphHeight / 10;
 
     let previousPointX = this.graphWidth - horizontalLineDistance * (this.values.length - 1);
-    let previousPointY = this.graphHeight - this.values[0] * verticalLineDistance / 10;
+    let previousPointY = this.graphHeight - this.values[0] * verticalLineDistance * (100 / this.maxValue) / 10;
 
     for (let i = 1; i < this.values.length; i++) {
       const currentPointX = this.graphWidth - horizontalLineDistance * (this.values.length - 1 - i);
-      const currentPointY = this.graphHeight - this.values[i] * verticalLineDistance / 10;
+      const currentPointY = this.graphHeight - this.values[i] * verticalLineDistance * (100 / this.maxValue) / 10;
 
       this.canvasManager.drawLine(previousPointX, previousPointY,
         currentPointX, currentPointY, this.valuesConnectorLineWidth, this.graphTheme.lineColor);
@@ -113,10 +131,10 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
     for (let i = 0; i < this.values.length - 1; i++) {
       const x1 = this.graphWidth - horizontalLineDistance * (this.values.length - 1 - i);
-      const y1 = this.graphHeight - this.values[i] * verticalLineDistance / 10;
+      const y1 = this.graphHeight - this.values[i] * verticalLineDistance * (100 / this.maxValue) / 10;
 
       const x2 = this.graphWidth - horizontalLineDistance * (this.values.length - 1 - i - 1);
-      const y2 = this.graphHeight - this.values[i + 1] * verticalLineDistance / 10;
+      const y2 = this.graphHeight - this.values[i + 1] * verticalLineDistance * (100 / this.maxValue) / 10;
 
       this.canvasManager.drawFilledPolygon([
         { x: x1, y: y1 },

@@ -2,6 +2,7 @@
   <app-performance-nav-bar-item
     heading="CPU"
     [graphTheme]="graphThemes.cpu"
+    [graphValues]="cpuUtilizationValues"
     routerLinkUrl="/performance/cpu"
   >
     {{ cpu.Utilization }}%  {{ cpu.SpeedInGHz.toString().substr(0, 4) }} GHz
@@ -10,6 +11,8 @@
   <app-performance-nav-bar-item
     heading="Memory"
     [graphTheme]="graphThemes.memory"
+    [graphValues]="memoryUsageValues"
+    [maxGraphValue]="memory.TotalInBytes / (1024 * 1024 * 1024)"
     routerLinkUrl="/performance/memory"
   >
     {{ (memory.InUseInBytes / (1024 * 1024 * 1024)).toString().substr(0, 4) }}
@@ -23,6 +26,7 @@
   <app-performance-nav-bar-item
     heading="Wi-Fi"
     [graphTheme]="graphThemes.wifi"
+    [graphValues]="wifiReceiveSpeedValues"
     routerLinkUrl="/performance/wifi"
   >
     <span class="less-emphasis">S:</span>

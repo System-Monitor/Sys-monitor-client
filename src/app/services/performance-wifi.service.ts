@@ -21,6 +21,9 @@ export class PerformanceWifiService {
     SignalStrength: 0
   });
 
+  private wifiReceiveSpeedValues: number[] = [];
+  wifiReceiveSpeedValuesSubject = new BehaviorSubject<number[]>(this.wifiReceiveSpeedValues);
+
   constructor(private http: HttpClient) { }
 
   syncUpWifiPerformance() {
@@ -30,6 +33,17 @@ export class PerformanceWifiService {
     this.http.get(URL + WifiRoute)
       .subscribe((wifi: Wifi) => {
         this.wifiSubject.next(wifi);
+
+        this.handleNewWifiSpeedValue(wifi.ReceiveSpeedInKBPS);
+        this.wifiReceiveSpeedValuesSubject.next(this.wifiReceiveSpeedValues);
       });
+  }
+
+  handleNewWifiSpeedValue(speed: number) {
+    this.wifiReceiveSpeedValues.push(speed);
+
+    while (this.wifiReceiveSpeedValues.length > 11) {
+      this.wifiReceiveSpeedValues.shift();
+    }
   }
 }

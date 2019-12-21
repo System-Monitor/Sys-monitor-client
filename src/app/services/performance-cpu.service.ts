@@ -22,6 +22,9 @@ export class PerformanceCpuService {
     Utilization: 0
   });
 
+  private utilization: number[] = [];
+  utilizationSubject = new BehaviorSubject<number[]>(this.utilization);
+
   constructor(private http: HttpClient) { }
 
   syncUpCpuPerformance() {
@@ -31,6 +34,17 @@ export class PerformanceCpuService {
     this.http.get(URL + CpuRoute)
       .subscribe((cpu: Cpu) => {
         this.cpuSubject.next(cpu);
+
+        this.handleNewUtilizationValue(cpu.Utilization);
+        this.utilizationSubject.next(this.utilization);
       });
+  }
+
+  handleNewUtilizationValue(utilization: number) {
+    this.utilization.push(utilization);
+
+    while (this.utilization.length > 11) {
+      this.utilization.shift();
+    }
   }
 }

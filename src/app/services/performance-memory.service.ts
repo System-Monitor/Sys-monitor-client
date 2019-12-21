@@ -15,6 +15,9 @@ export class PerformanceMemoryService {
     TotalInBytes: 0
   });
 
+  private memoryUsageValues: number[] = [];
+  memoryUsageSubject = new BehaviorSubject<number[]>(this.memoryUsageValues);
+
   constructor(private http: HttpClient) { }
 
   syncUpMemoryPerformance() {
@@ -24,6 +27,17 @@ export class PerformanceMemoryService {
     this.http.get(URL + MemoryRoute)
       .subscribe((memory: Memory) => {
         this.memorySubject.next(memory);
+
+        this.handleNewMemoryUsageValue(memory.AvailableInBytes / (1024 * 1024 * 1024));
+        this.memoryUsageSubject.next(this.memoryUsageValues);
       });
+  }
+
+  handleNewMemoryUsageValue(usage: number) {
+    this.memoryUsageValues.push(usage);
+
+    while (this.memoryUsageValues.length > 11) {
+      this.memoryUsageValues.shift();
+    }
   }
 }

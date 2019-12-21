@@ -26,7 +26,8 @@ export const environment = {
     BaseUrl: 'https://system-stats<FIREBASE_PROJECT_ID>.firebaseio.com/',
     CpuRoute: 'cpu_info.json',
     MemoryRoute: 'memory_info.json',
-    WifiRoute: 'wifi_info.json'
+    WifiRoute: 'wifi_info.json',
+    syncAfterEveryMilliSeconds: 3000
   }
 };
 

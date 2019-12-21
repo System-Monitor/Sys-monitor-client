@@ -10,7 +10,11 @@
     </div>
 
     <div class="graph">
-      <app-graph [graphTheme]="graphTheme"></app-graph>
+      <app-graph
+        [graphTheme]="graphTheme"
+        [values]="memoryUsageValues"
+        [maxValue]="memory.TotalInBytes / (1024 * 1024 * 1024)"
+      ></app-graph>
     </div>
 
     <div class="info">
